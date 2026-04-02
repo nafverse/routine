@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>HSC 2026 — Humanities Routine</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg: #0c0f1e;
+  --card: #111527;
+  --card2: #161b30;
+  --indigo: #6366f1;
+  --indigo2: #818cf8;
+  --gold: #f0b429;
+  --gold2: #fcd34d;
+  --teal: #2dd4bf;
+  --rose: #fb7185;
+  --soft: #94a3b8;
+  --white: #e2e8f0;
+  --border: rgba(255,255,255,0.07);
+  --prayer-bg: rgba(240,180,41,0.07);
+  --prayer-border: rgba(240,180,41,0.28);
+  --priv-bg: rgba(45,212,191,0.07);
+  --priv-border: rgba(45,212,191,0.25);
+}
+* { box-sizing:border-box; margin:0; padding:0; }
+body { background:var(--bg); color:var(--white); font-family:'Sora',sans-serif; padding-bottom:70px; }
+
+/* HERO */
+.hero {
+  position:relative; overflow:hidden;
+  background: linear-gradient(145deg,#131830 0%,#0c0f1e 60%);
+  border-bottom:1px solid var(--border);
+  padding:52px 24px 38px; text-align:center;
+}
+.hero-orb {
+  position:absolute; border-radius:50%; filter:blur(80px); pointer-events:none;
+}
+.orb1 { width:400px; height:400px; background:rgba(99,102,241,0.12); top:-150px; left:-100px; }
+.orb2 { width:350px; height:350px; background:rgba(240,180,41,0.08); top:-100px; right:-80px; }
+.orb3 { width:300px; height:300px; background:rgba(45,212,191,0.07); bottom:-100px; left:50%; transform:translateX(-50%); }
+
+.arabic { font-family:'Amiri',serif; font-size:clamp(1.3rem,3.5vw,1.85rem); color:var(--gold); opacity:.92; margin-bottom:10px; letter-spacing:1px; }
+.hero-tag {
+  display:inline-block; background:rgba(99,102,241,0.12); color:var(--indigo2);
+  border:1px solid rgba(99,102,241,0.28); border-radius:20px;
+  font-size:10.5px; font-weight:600; letter-spacing:2.5px; text-transform:uppercase;
+  padding:5px 16px; margin:8px 0 14px;
+}
+.hero h1 { font-size:clamp(1.8rem,5vw,3rem); font-weight:700; line-height:1.12; margin-bottom:10px; }
+.hero h1 .hl { color:var(--gold2); }
+.hero h1 .hl2 { color:var(--teal); }
+.hero p { color:var(--soft); font-size:13.5px; max-width:560px; margin:0 auto; line-height:1.75; }
+
+.stats-row { display:flex; justify-content:center; gap:8px; flex-wrap:wrap; margin-top:22px; }
+.stat-pill {
+  background:rgba(255,255,255,0.04); border:1px solid var(--border);
+  border-radius:9px; padding:7px 14px; font-size:12px; font-weight:500; color:var(--soft);
+}
+.stat-pill strong { color:var(--white); }
+
+/* PRAYER BANNER */
+.prayer-banner {
+  background:linear-gradient(90deg,#111830,#0f1628,#111830);
+  border-bottom:1px solid rgba(240,180,41,0.14);
+  padding:13px 20px; overflow-x:auto;
+}
+.pbi { display:flex; justify-content:center; align-items:center; gap:5px; min-width:max-content; margin:0 auto; }
+.pp {
+  background:var(--prayer-bg); border:1px solid var(--prayer-border);
+  border-radius:9px; padding:7px 12px; text-align:center; min-width:84px;
+}
+.pp .pn { font-size:9px; font-weight:600; letter-spacing:1.5px; text-transform:uppercase; color:var(--gold); margin-bottom:1px; }
+.pp .pt { font-size:12.5px; font-weight:600; color:var(--white); }
+.pp .pa { font-family:'Amiri',serif; font-size:12px; color:var(--gold2); opacity:.8; }
+.psep { color:rgba(240,180,41,0.3); font-size:14px; }
+
+/* SUBJECTS LEGEND */
+.subj-legend {
+  display:flex; gap:8px; flex-wrap:wrap; margin:18px 0 0;
+}
+.subj-badge {
+  display:flex; align-items:center; gap:6px;
+  background:var(--card); border:1px solid var(--border);
+  border-radius:8px; padding:6px 12px; font-size:12px; font-weight:500; color:var(--soft);
+}
+.subj-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+
+/* LAYOUT */
+.container { max-width:980px; margin:0 auto; padding:0 15px; }
+.section-title {
+  font-size:1rem; font-weight:600; color:var(--white);
+  margin:32px 0 12px; display:flex; align-items:center; gap:10px;
+}
+.section-title::after { content:''; flex:1; height:1px; background:var(--border); }
+
+.notice {
+  margin:20px 0 0; background:rgba(45,212,191,0.06);
+  border:1px solid rgba(45,212,191,0.18); border-radius:12px;
+  padding:13px 16px; font-size:13px; color:var(--teal); line-height:1.75;
+}
+.notice strong { color:var(--white); }
+
+/* TABS */
+.tabs { display:flex; gap:6px; margin:26px 0 4px; flex-wrap:wrap; }
+.tab-btn {
+  padding:8px 14px; border-radius:9px; font-size:12px; font-weight:600;
+  cursor:pointer; border:1px solid var(--border); background:var(--card);
+  color:var(--soft); transition:all .18s; letter-spacing:.3px; font-family:'Sora',sans-serif;
+}
+.tab-btn:hover { border-color:rgba(99,102,241,0.35); color:var(--white); }
+.tab-btn.active { background:rgba(99,102,241,0.14); border-color:rgba(99,102,241,0.42); color:var(--indigo2); }
+.tab-btn.heavy::after { content:' 👨‍🏫×4'; font-size:10px; }
+.tab-btn.light::after { content:' 👨‍🏫×1'; font-size:10px; }
+.tab-note { font-size:11.5px; color:var(--soft); margin-bottom:14px; }
+
+.day-panel { display:none; }
+.day-panel.active { display:block; }
+
+/* TABLE */
+.table-wrap {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:16px; overflow:hidden; overflow-x:auto;
+}
+.rt { width:100%; border-collapse:collapse; font-size:13px; min-width:530px; }
+.rt thead tr { background:rgba(99,102,241,0.07); border-bottom:1px solid rgba(99,102,241,0.15); }
+.rt th { padding:10px 13px; text-align:left; font-size:9.5px; font-weight:600; text-transform:uppercase; letter-spacing:1.5px; color:var(--indigo2); white-space:nowrap; }
+.rt td { padding:10px 13px; border-bottom:1px solid var(--border); color:var(--soft); vertical-align:middle; line-height:1.5; }
+.rt tr:last-child td { border-bottom:none; }
+.rt tr.pr td { background:var(--prayer-bg); border-left:3px solid var(--gold); }
+.rt tr.pr td:first-child { padding-left:10px; }
+.rt tr.pvr td { background:var(--priv-bg); border-left:3px solid var(--teal); }
+.rt tr.pvr td:first-child { padding-left:10px; }
+.rt tr:hover td { background:rgba(255,255,255,0.012); }
+.rt tr.pr:hover td { background:rgba(240,180,41,0.11); }
+.rt tr.pvr:hover td { background:rgba(45,212,191,0.10); }
+.tc { font-weight:600; color:var(--white); white-space:nowrap; font-size:12.5px; }
+.ac { font-weight:500; color:var(--white); }
+
+/* TAGS */
+.tag { display:inline-block; border-radius:5px; padding:2px 8px; font-size:10.5px; font-weight:600; letter-spacing:.3px; white-space:nowrap; }
+.t-salah { background:rgba(240,180,41,0.13); color:var(--gold2); border:1px solid rgba(240,180,41,0.28); }
+.t-priv  { background:rgba(45,212,191,0.10); color:var(--teal); border:1px solid rgba(45,212,191,0.25); }
+.t-hard  { background:rgba(251,113,133,0.10); color:var(--rose); border:1px solid rgba(251,113,133,0.22); }
+.t-med   { background:rgba(240,180,41,0.09); color:var(--gold); border:1px solid rgba(240,180,41,0.20); }
+.t-easy  { background:rgba(99,102,241,0.11); color:var(--indigo2); border:1px solid rgba(99,102,241,0.22); }
+.t-break { background:rgba(148,163,184,0.08); color:var(--soft); border:1px solid rgba(148,163,184,0.14); }
+.t-rev   { background:rgba(45,212,191,0.08); color:var(--teal); border:1px solid rgba(45,212,191,0.18); }
+.t-sleep { background:rgba(147,112,219,0.10); color:#c4b5fd; border:1px solid rgba(147,112,219,0.22); }
+
+/* SUBJECT COLOR DOTS */
+.s-bangla   { background:#f0b429; }
+.s-english  { background:#6366f1; }
+.s-ict      { background:#2dd4bf; }
+.s-econ     { background:#fb7185; }
+.s-geo      { background:#34d399; }
+.s-hist     { background:#a78bfa; }
+.s-home     { background:#f97316; }
+
+/* WEEKLY OVERVIEW */
+.week-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(255px,1fr)); gap:11px; }
+.day-card {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:13px; padding:15px; transition:border-color .2s;
+}
+.day-card:hover { border-color:rgba(99,102,241,0.25); }
+.dn {
+  font-size:.9rem; font-weight:600; color:var(--indigo2);
+  margin-bottom:10px; padding-bottom:8px; border-bottom:1px solid var(--border);
+  display:flex; align-items:center; gap:7px;
+}
+.pbadge {
+  font-size:9.5px; border-radius:4px; padding:2px 7px; font-weight:600;
+}
+.pbadge.heavy { background:rgba(45,212,191,0.10); color:var(--teal); border:1px solid rgba(45,212,191,0.22); }
+.pbadge.light { background:rgba(99,102,241,0.10); color:var(--indigo2); border:1px solid rgba(99,102,241,0.20); }
+.ds { display:flex; flex-direction:column; gap:5px; }
+.sr { display:flex; align-items:center; gap:7px; font-size:12.5px; }
+.dot { width:6px; height:6px; border-radius:50%; flex-shrink:0; }
+.sn { color:var(--white); font-weight:500; flex:1; }
+.st { color:var(--soft); font-size:11px; }
+
+/* TIPS */
+.tips-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(190px,1fr)); gap:11px; }
+.tip-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:15px; }
+.ti { font-size:1.4rem; margin-bottom:8px; }
+.tt { font-weight:600; color:var(--white); font-size:13px; margin-bottom:5px; }
+.tx { color:var(--soft); font-size:12px; line-height:1.65; }
+
+/* EXAM CARD */
+.exam-card {
+  background:linear-gradient(135deg,#121a30,#0c0f1e);
+  border:1px solid rgba(240,180,41,0.2); border-radius:16px;
+  padding:28px; text-align:center; margin-top:26px;
+}
+.bismillah { font-family:'Amiri',serif; font-size:1.6rem; color:var(--gold); margin-bottom:10px; opacity:.9; }
+.exam-card h3 { color:var(--soft); font-size:13.5px; font-weight:400; margin-bottom:5px; }
+.exam-date { font-size:2rem; font-weight:700; color:var(--gold2); margin-bottom:11px; }
+.days-tag {
+  display:inline-block; background:rgba(240,180,41,0.09); border:1px solid rgba(240,180,41,0.24);
+  border-radius:9px; padding:6px 18px; font-size:12.5px; font-weight:600; color:var(--gold2); margin-bottom:12px;
+}
+.dua { font-family:'Amiri',serif; font-size:1.1rem; color:var(--teal); opacity:.85; line-height:1.8; max-width:420px; margin:8px auto 0; }
+.dua span { font-family:'Sora',sans-serif; font-size:.75rem; color:var(--soft); }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-orb orb1"></div>
+  <div class="hero-orb orb2"></div>
+  <div class="hero-orb orb3"></div>
+  <div class="arabic">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
+  <div class="hero-tag">HSC 2026 · Humanities · Faridpur, Bangladesh</div>
+  <h1>Daily Study Routine<br/><span class="hl">৬টা সকাল</span> থেকে <span class="hl2">রাত ১২টা</span></h1>
+  <p>সব ৫ ওয়াক্ত নামাজ protected · ১৩টি paper · Private Sat/Mon/Wed ৪টি, Sun/Tue/Thu ১টি · পরীক্ষা ৭ জুন ২০২৬</p>
+  <div class="stats-row">
+    <div class="stat-pill">⏰ শুরু: <strong>6:00 AM</strong></div>
+    <div class="stat-pill">🌙 ঘুম: <strong>12:00 AM</strong></div>
+    <div class="stat-pill">🕌 <strong>৫ ওয়াক্ত</strong> নামাজ</div>
+    <div class="stat-pill">👨‍🏫 Sat/Mon/Wed: <strong>×4 Private</strong></div>
+    <div class="stat-pill">👨‍🏫 Sun/Tue/Thu: <strong>×1 Private</strong></div>
+    <div class="stat-pill">📚 <strong>১৩টি</strong> Paper</div>
+  </div>
+</div>
+
+<!-- PRAYER BANNER -->
+<div class="prayer-banner">
+  <div class="pbi">
+    <div class="pp"><div class="pn">Fajr</div><div class="pt">~4:05 AM</div><div class="pa">الفجر</div></div>
+    <div class="psep">·</div>
+    <div class="pp"><div class="pn">Dhuhr</div><div class="pt">1:30 PM</div><div class="pa">الظهر</div></div>
+    <div class="psep">·</div>
+    <div class="pp"><div class="pn">Asr</div><div class="pt">~4:45 PM</div><div class="pa">العصر</div></div>
+    <div class="psep">·</div>
+    <div class="pp"><div class="pn">Maghrib</div><div class="pt">~6:45 PM</div><div class="pa">المغرب</div></div>
+    <div class="psep">·</div>
+    <div class="pp"><div class="pn">Isha</div><div class="pt">~8:05 PM</div><div class="pa">العشاء</div></div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- Subject Legend -->
+  <div class="section-title">📚 তোমার Subjects</div>
+  <div class="subj-legend">
+    <div class="subj-badge"><div class="subj-dot s-bangla"></div>Bangla 1st & 2nd</div>
+    <div class="subj-badge"><div class="subj-dot s-english"></div>English 1st & 2nd</div>
+    <div class="subj-badge"><div class="subj-dot s-ict"></div>ICT</div>
+    <div class="subj-badge"><div class="subj-dot s-econ"></div>Economics 1st & 2nd</div>
+    <div class="subj-badge"><div class="subj-dot s-geo"></div>Geography 1st & 2nd</div>
+    <div class="subj-badge"><div class="subj-dot s-hist"></div>Islamic History 1st & 2nd</div>
+    <div class="subj-badge"><div class="subj-dot s-home"></div>Home Science 1st & 2nd</div>
+  </div>
+
+  <div class="notice" style="margin-top:16px;">
+    <strong>📌 Note:</strong> Fajr (~4:05 AM) routine শুরুর আগেই — ঘুম থেকে উঠে নামাজ পড়ে নাও, তারপর 6 AM থেকে পড়া শুরু। Sat/Mon/Wed তে ৪টি private: 9 AM, 10 AM, 11 AM এবং 4 PM। Sun/Tue/Thu তে 1টি: 10 AM।
+  </div>
+
+  <!-- DAY TABS -->
+  <div class="section-title">📅 Daily Timetable — দিন বেছে নাও</div>
+  <div class="tabs">
+    <button class="tab-btn heavy active" onclick="showDay('sat',this)">Saturday</button>
+    <button class="tab-btn light" onclick="showDay('sun',this)">Sunday</button>
+    <button class="tab-btn heavy" onclick="showDay('mon',this)">Monday</button>
+    <button class="tab-btn light" onclick="showDay('tue',this)">Tuesday</button>
+    <button class="tab-btn heavy" onclick="showDay('wed',this)">Wednesday</button>
+    <button class="tab-btn light" onclick="showDay('thu',this)">Thursday</button>
+    <button class="tab-btn" onclick="showDay('fri',this)">Friday 🕌</button>
+  </div>
+  <p class="tab-note">👨‍🏫×4 = ৪টি private দিন &nbsp;|&nbsp; 👨‍🏫×1 = ১টি private দিন</p>
+
+  <!-- ══════════ SATURDAY (4 privates) ══════════ -->
+  <div id="sat" class="day-panel active">
+    <div class="table-wrap"><table class="rt">
+      <thead><tr><th>সময়</th><th>Activity</th><th>ধরন</th><th>সময়কাল</th></tr></thead>
+      <tbody>
+        <tr><td class="tc">6:00 – 6:15 AM</td><td class="ac">☀️ উঠুন · Freshen up · Quran তিলাওয়াত / Azkar</td><td><span class="tag t-break">সকাল</span></td><td>15 min</td></tr>
+        <tr><td class="tc">6:15 – 7:15 AM</td><td class="ac">📖 <strong>Bangla 1st</strong> — গল্প, কবিতা, রচনা পড়া</td><td><span class="tag t-med">Medium</span></td><td>1 hr</td></tr>
+        <tr><td class="tc">7:15 – 8:15 AM</td><td class="ac">📖 <strong>Bangla 2nd</strong> — ব্যাকরণ, প্রবন্ধ, সারাংশ</td><td><span class="tag t-med">Medium</span></td><td>1 hr</td></tr>
+        <tr><td class="tc">8:15 – 8:45 AM</td><td class="ac">🍳 নাস্তা · Private-এর জন্য প্রস্তুতি</td><td><span class="tag t-break">Break</span></td><td>30 min</td></tr>
+        <tr class="pvr"><td class="tc">9:00 – 10:00 AM</td><td class="ac">🏫 <strong>Private #1</strong> — 9 AM tuition</td><td><span class="tag t-priv">Private ①</span></td><td>1 hr</td></tr>
+        <tr class="pvr"><td class="tc">10:00 – 11:00 AM</td><td class="ac">🏫 <strong>Private #2</strong> — 10 AM tuition</td><td><span class="tag t-priv">Private ②</span></td><td>1 hr</td></tr>
+        <tr class="pvr"><td class="tc">11:00 AM – 12:00 PM</td><td class="ac">🏫 <strong>Private #3</strong> — 11 AM tuition</td><td><span class="tag t-priv">Private ③</span></td><td>1 hr</td></tr>
+        <tr><td class="tc">12:00 – 1:00 PM</td><td class="ac">🍽️ দুপুরের খাবার · বিশ্রাম · Dhuhr-এর প্রস্তুতি</td><td><span class="tag t-break">Break</span></td><td>1 hr</td></tr>
+        <tr class="pr"><td class="tc">1:30 PM</td><td class="ac">🕌 <strong>Dhuhr Salah</strong> (৪ সুন্নত + ৪ ফরজ + ২ সুন্নত + ২ নফল)</td><td><span class="tag t-salah">الظهر Dhuhr</span></td><td>20 min</td></tr>
+        <tr><td class="tc">1:50 – 3:50 PM</td><td class="ac">📊 <strong>Economics 1st & 2nd</strong> — চাহিদা-সরবরাহ, তত্ত্ব, MCQ</td><td><span class="tag t-hard">গুরুত্বপূর্ণ</span></td><td>2 hrs</td></tr>
+        <tr><td class="tc">3:50 – 4:00 PM</td><td class="ac">বিশ্রাম · পানি · Asr প্রস্তুতি</td><td><span class="tag t-break">Break</span></td><td>10 min</td></tr>
+        <tr class="pvr"><td class="tc">4:00 – 5:00 PM</td><td class="ac">🏫 <strong>Private #4</strong> — 4 PM tuition</td><td><span class="tag t-priv">Private ④</span></td><td>1 hr</td></tr>
+        <tr class="pr"><td class="tc">~4:45 PM</td><td class="ac">🕌 <strong>Asr Salah</strong> — Private শেষে পড়ে নাও (Private ৪:৪৫ এর মধ্যে break নিয়ে)</td><td><span class="tag t-salah">العصر Asr</span></td><td>20 min</td></tr>
+        <tr><td class="tc">5:00 – 6:00/6:30 PM</td><td class="ac"> বাইরে হাঁটাহাঁটি করা</td><td><span class="tag t-med">Break</span></td><td>~1 hr 30 min</td></tr>
+        <tr class="pr"><td class="tc">~6:45 PM</td><td class="ac">🌅 <strong>Maghrib Salah</strong> (৩ ফরজ + ২ সুন্নত + ২ নফল) </td><td><span class="tag t-salah">المغرب Maghrib</span></td><td>35 min</td></tr>
+        <tr><td class="tc">6:30 – 8:00 PM</td><td class="ac">🌍 <strong>English 1st & 2nd</strong></td><td><span class="tag t-med">Medium</span></td><td>40 min</td></tr>
+        <tr class="pr"><td class="tc">~8:05 PM</td><td class="ac">🌙 <strong>Isha Salah</strong> (৪ সুন্নত + ৪ ফরজ + ২ সুন্নত + ৩ বিতর)· রাতের খাবার</td><td><span class="tag t-salah">العشاء Isha</span></td><td>25 min</td></tr>
+        <tr><td class="tc">8:30 – 10:00 PM</td><td class="ac">📜 <strong>Islamic History 1st & 2nd</strong> — ঘটনাবলী, সালসন, MCQ</td><td><span class="tag t-med">Medium</span></td><td>1.5 hrs</td></tr>
+        <tr><td class="tc">10:00 – 11:00 PM</td><td class="ac">🏠 <strong>Home Science 1st & 2nd</strong> — পুষ্টি, গৃহব্যবস্থাপনা, notes</td><td><span class="tag t-easy">Easy</span></td><td>1 hr</td></tr>
+        <tr><td class="tc">11:00 – 11:30 PM</td><td class="ac">💻 <strong>ICT</strong> — Chapter notes, MCQ practice</td><td><span class="tag t-easy">Easy</span></td><td>30 min</td></tr>
+        <tr><td class="tc">11:30 PM – 12:00 AM</td><td class="ac">📝 আজকের revision · আগামীকালের plan · Azkar</td><td><span class="tag t-rev">Revision</span></td><td>30 min</td></tr>
+        <tr><td class="tc">12:00 AM</td><td class="ac">😴 ঘুম</td><td><span class="tag t-sleep">ঘুম</span></td><td>~6 hrs</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <!-- ══════════ SUNDAY (1 private @ 10 AM) ══════════ -->
+  <div id="sun" class="day-panel">
+    <div class="table-wrap"><table class="rt">
+      <thead><tr><th>সময়</th><th>Activity</th><th>ধরন</th><th>সময়কাল</th></tr></thead>
+      <tbody>
+        <tr><td class="tc">6:00 – 6:15 AM</td><td class="ac">☀️ Freshen up · Quran / Azkar</td><td><span class="tag t-break">সকাল</span></td><td>15 min</td></tr>
+        <tr><td class="tc">6:15 – 8:15 AM</td><td class="ac">📊 <strong>Economics 1st & 2nd</strong> — অধ্যায় পড়া, সংজ্ঞা, graph</td><td><span class="tag t-hard">গুরুত্বপূর্ণ</span></td><td>2 hrs</td></tr>
+        <tr><td class="tc">8:15 – 8:45 AM</td><td class="ac">🍳 নাস্তা · বিশ্রাম</td><td><span class="tag t-break">Break</span></td><td>30 min</td></tr>
+        <tr><td class="tc">8:45 – 9:45 AM</td><td class="ac">💻 <strong>ICT</strong></td><td><span class="tag t-med">Medium</span></td><td>1 hr</td></tr>
+        <tr class="pvr"><td class="tc">10:00 – 11:00 AM</td><td class="ac">🏫 <strong>Private</strong> — 10 AM tuition</td><td><span class="tag t-priv">Private ①</span></td><td>1 hr</td></tr>
+        <tr><td class="tc">11:00 AM – 1:00 PM</td><td class="ac">📜 <strong>Islamic History 1st & 2nd</strong> — ইসলামের ইতিহাস, গুরুত্বপূর্ণ ঘটনা, বাংলাদেশের ইতিহাস, MCQ</td><td><span class="tag t-med">Medium</span></td><td>1 hr</td></tr>
+        <tr><td class="tc">1:00 – 2:00 PM</td><td class="ac">🍽️ দুপুরের খাবার · বিশ্রাম</td><td><span class="tag t-break">Break</span></td><td>1 hr</td></tr>
+        <tr class="pr"><td class="tc">1:30 PM</td><td class="ac">🕌 <strong>Dhuhr Salah</strong></td><td><span class="tag t-salah">الظهر Dhuhr</span></td><td>20 min</td></tr>
+        <tr><td class="tc">2:00 – 4:00 PM</td><td class="ac">🗺️ <strong>Geography 1st & 2nd</strong> — মানচিত্র অনুশীলন, MCQ</td><td><span class="tag t-med">Hard</span></td><td>2 hrs</td></tr>
+        <tr><td class="tc">4:00 – 5:00 PM</td><td class="ac">বিশ্রাম · পানি</td><td><span class="tag t-break">Break</span></td><td>20 min</td></tr>
+        <tr class="pr"><td class="tc">~4:45 PM</td><td class="ac">🕌 <strong>Asr Salah</strong> · নাস্তা</td><td><span class="tag t-salah">العصر Asr</span></td><td>25 min</td></tr>
+        <tr><td class="tc">5:10 – 6:40 PM</td><td class="ac">বাইরে হাঁটাহাঁটি করা</td><td><span class="tag t-easy">Break</span></td><td>1.5 hrs</td></tr>
+        <tr class="pr"><td class="tc">~6:45 PM</td><td class="ac">🌅 <strong>Maghrib Salah</strong> </td><td><span class="tag t-salah">المغرب Maghrib</span></td><td>35 min</td></tr>
+        <tr><td class="tc">7:20 – 8:00 PM</td><td class="ac">🌍 <strong>English 2nd</strong> — Grammar, unseen, writing</td><td><span class="tag t-easy">Easy</span></td><td>40 min</td></tr>
+        <tr class="pr"><td class="tc">~8:05 PM</td><td class="ac">🌙 <strong>Isha Salah</strong>· রাতের খাবার</td><td><span class="tag t-salah">العشاء Isha</span></td><td>25 min</td></tr>
+        <tr><td class="tc">8:30 – 10:00 PM</td><td class="ac">📖 <strong>Bangla 1st & 2nd</strong> — রচনা লেখা, সারাংশ, ব্যাকরণ</td><td><span class="tag t-med">Medium</span></td><td>1.5 hrs</td></tr>
+        <tr><td class="tc">10:00 – 11:00 PM</td><td class="ac">🏠 <strong>Home Science 1st & 2nd</strong> — পুষ্টিবিজ্ঞান, রান্না, শিশু পরিচর্যা </td><td><span class="tag t-hard">গুরুত্বপূর্ণ</span></td><td>1 hr</td></tr>
+        <tr><td class="tc">11:00 – 11:30 PM</td><td class="ac">📝 Notes review</td><td><span class="tag t-easy">Easy</span></td><td>30 min</td></tr>
+        <tr><td class="tc">11:30 PM – 12:00 AM</td><td class="ac">📝 Revision · Azkar</td><td><span class="tag t-rev">Revision</span></td><td>30 min</td></tr>
+        <tr><td class="tc">12:00 AM</td><td class="ac">😴 ঘুম</td><td><span class="tag t-sleep">ঘুম</span></td><td>~6 hrs</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <!-- ══════════ MONDAY (4 privates) ══════════ -->
+  <div id="mon" class="day-panel">
+    <div class="table-wrap"><table class="rt">
+      <thead><tr><th>সময়</th><th>Activity</th><th>ধরন</th><th>সময়কাল</th></tr></thead>
+      <tbody>
+        <tr><td class="tc">6:00 – 6:15 AM</td><td class="ac">☀️ Freshen up · Quran / Azkar</td><td><span class="tag t-break">সকাল</span></td><td>15 min</td></tr>
+        <tr><td class="tc">6:15 – 7:15 AM</td><td class="ac">📊 <strong>Economics 1st</strong> — নতুন অধ্যায় বা দুর্বল টপিক</td><td><span class="tag t-hard">গুরুত্বপূর্ণ</span></td><td>1 hr</td></tr>
+        <tr><td class="tc">7:15 – 8:15 AM</td><td class="ac">🗺️ <strong>Geography</strong> — Chapter revision, diagram</td><td><span class="tag t-med">Medium</span></td><td>1 hr</td></tr>
+        <tr><td class="tc">8:15 – 8:45 AM</td><td class="ac">🍳 নাস্তা · Private প্রস্তুতি</td><td><span class="tag t-break">Break</span></td><td>30 min</td></tr>
+        <tr class="pvr"><td class="tc">9:00 – 10:00 AM</td><td class="ac">🏫 <strong>Private #1</strong> — 9 AM tuition</td><td><span class="tag t-priv">Private ①</span></td><td>1 hr</td></tr>
+        <tr class="pvr"><td class="tc">10:00 – 11:00 AM</td><td class="ac">🏫 <strong>Private #2</strong> — 10 AM tuition</td><td><span class="tag t-priv">Private ②</span></td><td>1 hr</td></tr>
+        <tr class="pvr"><td class="tc">11:00 AM – 12:00 PM</td><td class="ac">🏫 <strong>Private #3</strong> — 11 AM tuition</td><td><span class="tag t-priv">Private ③</span></td><td>1 hr</td></tr>
+        <tr><td class="tc">12:00 – 1:00 PM</td><td class="ac">🍽️ দুপুরের খাবার · বিশ্রাম</td><td><span class="tag t-break">Break</span></td><td>1 hr</td></tr>
+        <tr class="pr"><td class="tc">1:30 PM</td><td class="ac">🕌 <strong>Dhuhr Salah</strong></td><td><span class="tag t-salah">الظهر Dhuhr</span></td><td>20 min</td></tr>
+        <tr><td class="tc">1:50 – 3:50 PM</td><td class="ac">📜 <strong>Islamic History 1st & 2nd</strong> — তারিখ, খলিফা, যুদ্ধ, MCQ</td><td><span class="tag t-med">Medium</span></td><td>2 hrs</td></tr>
+        <tr><td class="tc">3:50 – 4:00 PM</td><td class="ac">বিশ্রাম · Asr প্রস্তুতি</td><td><span class="tag t-break">Break</span></td><td>10 min</td></tr>
+        <tr class="pvr"><td class="tc">4:00 – 5:00 PM</td><td class="ac">🏫 <strong>Private #4</strong> — 4 PM tuition</td><td><span class="tag t-priv">Private ④</span></td><td>1 hr</td></tr>
+        <tr class="pr"><td class="tc">~4:45 PM</td><td class="ac">🕌 <strong>Asr Salah</strong> — 4 PM private-এর মধ্যে break নিয়ে পড়ে নাও</td><td><span class="tag t-salah">العصر Asr</span></td><td>20 min</td></tr>
+        <tr><td class="tc">5:00 – 6:40 PM</td><td class="ac">   হাঁটাহাঁটি     </td><td><span class="tag t-easy">Break</span></td><td>1 hr 40 min</td></tr>
+        <tr class="pr"><td class="tc">~6:45 PM</td><td class="ac">🌅 <strong>Maghrib Salah</strong> </td><td><span class="tag t-salah">المغرب Maghrib</span></td><td>35 min</td></tr>
+        <tr><td class="tc">7:00 – 8:00 PM</td><td class="ac">🌍 <strong>English 1st</strong> — Writing skills, formal letter</td><td><span class="tag t-easy">Easy</span></td><td>40 min</td></tr>
+        <tr class="pr"><td class="tc">~8:05 PM</td><td class="ac">🌙 <strong>Isha Salah</strong>· রাতের খাবার</td><td><span class="tag t-salah">العشاء Isha</span></td><td>25 min</td></tr>
+        <tr><td class="tc">8:30 – 10:00 PM</td><td class="ac">🏠 <strong>Home Science 1st & 2nd</strong> — পোশাক, স্বাস্থ্য, শিশু, MCQ</td><td><span class="tag t-med">Medium</span></td><td>1.5 hrs</td></tr>
+        <tr><td class="tc">10:00 – 11:00 PM</td><td class="ac">📊 <strong>Economics 2nd</strong> — বাংলাদেশের অর্থনীতি, জাতীয় আয়</td><td><span class="tag t-hard">গুরুত্বপূর্ণ</span></td><td>1 hr</td></tr>
+        <tr><td class="tc">11:00 – 11:40 PM</td><td class="ac">📖 <strong>Bangla 1st & 2nd</strong> — কবিতা বিশ্লেষণ, রচনা</td><td><span class="tag t-hard">গুরুত্বপূর্ণ</span></td><td>40 min</td></tr>
+        <tr><td class="tc">12:00 AM</td><td class="ac">😴 ঘুম</td><td><span class="tag t-sleep">ঘুম</span></td><td>~6 hrs</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <!-- ══════════ TUESDAY (1 private @ 10 AM) ══════════ -->
+  <div id="tue" class="day-panel">
+    <div class="table-wrap"><table class="rt">
+      <thead><tr><th>সময়</th><th>Activity</th><th>ধরন</th><th>সময়কাল</th></tr></thead>
+      <tbody>
+        <tr><td class="tc">6:00 – 6:15 AM</td><td class="ac">☀️ Freshen up · Quran / Azkar</td><td><span class="tag t-break">সকাল</span></td><td>15 min</td></tr>
+        <tr><td class="tc">6:15 – 8:15 AM</td><td class="ac">📊 <strong>Economics</strong> — Mock test (timed, no help, board প্রশ্ন)</td><td><span class="tag t-hard">Mock Test</span></td><td>2 hrs</td></tr>
+        <tr><td class="tc">8:15 – 8:45 AM</td><td class="ac">🍳 নাস্তা</td><td><span class="tag t-break">Break</span></td><td>30 min</td></tr>
+        <tr><td class="tc">8:45 – 9:45 AM</td><td class="ac">📜 <strong>Islamic History</strong> — Mock MCQ sprint (সব অধ্যায়)</td><td><span class="tag t-med">Mock Test</span></td><td>1 hr</td></tr>
+        <tr class="pvr"><td class="tc">10:00 – 11:00 AM</td><td class="ac">🏫 <strong>Private</strong> — 10 AM tuition</td><td><span class="tag t-priv">Private ①</span></td><td>1 hr</td></tr>
+        <tr><td class="tc">11:00 AM – 1:00 PM</td><td class="ac">🗺️ <strong>Geography</strong> — Map work, CQ practice</td><td><span class="tag t-med">Medium</span></td><td>1 hr</td></tr>
+        <tr><td class="tc">1:00 – 1:50 PM</td><td class="ac">🍽️ দুপুরের খাবার · বিশ্রাম</td><td><span class="tag t-break">Break</span></td><td>1 hr</td></tr>
+        <tr class="pr"><td class="tc">1:30 PM</td><td class="ac">🕌 <strong>Dhuhr Salah</strong></td><td><span class="tag t-salah">الظهر Dhuhr</span></td><td>20 min</td></tr>
+        <tr><td class="tc">1:50 – 3:50 PM</td><td class="ac">🏠 <strong>Home Science</strong> — সম্পূর্ণ revision, CQ practice</td><td><span class="tag t-easy">Easy</span></td><td>2 hrs</td></tr>
+        <tr><td class="tc">3:50 – 4:10 PM</td><td class="ac">বিশ্রাম</td><td><span class="tag t-break">Break</span></td><td>20 min</td></tr>
+        <tr class="pr"><td class="tc">~4:45 PM</td><td class="ac">🕌 <strong>Asr Salah</strong> · নাস্তা</td><td><span class="tag t-salah">العصر Asr</span></td><td>25 min</td></tr>
+        <tr><td class="tc">5:10 – 6:40 PM</td><td class="ac">বাইরে হাঁটাহাঁটি করা</td><td><span class="tag t-med">Break</span></td><td>1.5 hrs</td></tr>
+        <tr class="pr"><td class="tc">~6:45 PM</td><td class="ac">🌅 <strong>Maghrib Salah</strong> </td><td><span class="tag t-salah">المغرب Maghrib</span></td><td>35 min</td></tr>
+        <tr><td class="tc">7:20 – 8:00 PM</td><td class="ac">🌍 <strong>English</strong> — Essay, dialogue writing</td><td><span class="tag t-easy">Easy</span></td><td>40 min</td></tr>
+        <tr class="pr"><td class="tc">~8:05 PM</td><td class="ac">🌙 <strong>Isha Salah</strong>· রাতের খাবার</td><td><span class="tag t-salah">العشاء Isha</span></td><td>25 min</td></tr>
+        <tr><td class="tc">8:30 – 10:30 PM</td><td class="ac">📊 <strong>Economics</strong> — Mock test review + দুর্বল অধ্যায় ঠিক করো</td><td><span class="tag t-hard">গুরুত্বপূর্ণ</span></td><td>2 hrs</td></tr>
+        <tr><td class="tc">10:30 – 11:30 PM</td><td class="ac">💻 <strong>ICT</strong> — Full chapter revision + past MCQ</td><td><span class="tag t-easy">Easy</span></td><td>1 hr</td></tr>
+        <tr><td class="tc">11:30 PM – 12:00 AM</td><td class="ac">📝 সাপ্তাহিক revision নোট · Azkar</td><td><span class="tag t-rev">Revision</span></td><td>30 min</td></tr>
+        <tr><td class="tc">12:00 AM</td><td class="ac">😴 ঘুম</td><td><span class="tag t-sleep">ঘুম</span></td><td>~6 hrs</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <!-- ══════════ WEDNESDAY (4 privates) ══════════ -->
+  <div id="wed" class="day-panel">
+    <div class="table-wrap"><table class="rt">
+      <thead><tr><th>সময়</th><th>Activity</th><th>ধরন</th><th>সময়কাল</th></tr></thead>
+      <tbody>
+        <tr><td class="tc">6:00 – 6:15 AM</td><td class="ac">☀️ Freshen up · Quran / Azkar</td><td><span class="tag t-break">সকাল</span></td><td>15 min</td></tr>
+        <tr><td class="tc">6:15 – 7:15 AM</td><td class="ac">📜 <strong>Islamic History 1st</strong> — মুখস্থ তারিখ, ঘটনা, সংজ্ঞা</td><td><span class="tag t-med">Medium</span></td><td>1 hr</td></tr>
+        <tr><td class="tc">7:15 – 8:15 AM</td><td class="ac">📜 <strong>Islamic History 2nd</strong> — বাংলাদেশ অংশ, MCQ</td><td><span class="tag t-med">Medium</span></td><td>1 hr</td></tr>
+        <tr><td class="tc">8:15 – 8:45 AM</td><td class="ac">🍳 নাস্তা · Private প্রস্তুতি</td><td><span class="tag t-break">Break</span></td><td>30 min</td></tr>
+        <tr class="pvr"><td class="tc">9:00 – 10:00 AM</td><td class="ac">🏫 <strong>Private #1</strong> — 9 AM tuition</td><td><span class="tag t-priv">Private ①</span></td><td>1 hr</td></tr>
+        <tr class="pvr"><td class="tc">10:00 – 11:00 AM</td><td class="ac">🏫 <strong>Private #2</strong> — 10 AM tuition</td><td><span class="tag t-priv">Private ②</span></td><td>1 hr</td></tr>
+        <tr class="pvr"><td class="tc">11:00 AM – 12:00 PM</td><td class="ac">🏫 <strong>Private #3</strong> — 11 AM tuition</td><td><span class="tag t-priv">Private ③</span></td><td>1 hr</td></tr>
+        <tr><td class="tc">12:00 – 1:00 PM</td><td class="ac">🍽️ দুপুরের খাবার · বিশ্রাম</td><td><span class="tag t-break">Break</span></td><td>1 hr</td></tr>
+        <tr class="pr"><td class="tc">1:30 PM</td><td class="ac">🕌 <strong>Dhuhr Salah</strong></td><td><span class="tag t-salah">الظهر Dhuhr</span></td><td>20 min</td></tr>
+        <tr><td class="tc">1:50 – 3:50 PM</td><td class="ac">🗺️ <strong>Geography 1st & 2nd</strong> — সম্পূর্ণ revision, map practice</td><td><span class="tag t-med">Medium</span></td><td>2 hrs</td></tr>
+        <tr><td class="tc">3:50 – 4:00 PM</td><td class="ac">বিশ্রাম</td><td><span class="tag t-break">Break</span></td><td>10 min</td></tr>
+        <tr class="pvr"><td class="tc">4:00 – 5:00 PM</td><td class="ac">🏫 <strong>Private #4</strong> — 4 PM tuition</td><td><span class="tag t-priv">Private ④</span></td><td>1 hr</td></tr>
+        <tr class="pr"><td class="tc">~4:45 PM</td><td class="ac">🕌 <strong>Asr Salah</strong> — Private-এর মধ্যে break নিয়ে পড়ে নাও</td><td><span class="tag t-salah">العصر Asr</span></td><td>20 min</td></tr>
+        <tr><td class="tc">5:00 – 6:40 PM</td><td class="ac">📊 <strong>Economics</strong> — চাহিদা বিশ্লেষণ, graph আঁকা, CQ</td><td><span class="tag t-hard">গুরুত্বপূর্ণ</span></td><td>1 hr 40 min</td></tr>
+        <tr class="pr"><td class="tc">~6:45 PM</td><td class="ac">🌅 <strong>Maghrib Salah</strong> · রাতের খাবার</td><td><span class="tag t-salah">المغرب Maghrib</span></td><td>35 min</td></tr>
+        <tr><td class="tc">7:20 – 8:00 PM</td><td class="ac">🌍 <strong>English 2nd</strong> — Grammar, translation, unseen</td><td><span class="tag t-easy">Easy</span></td><td>40 min</td></tr>
+        <tr class="pr"><td class="tc">~8:05 PM</td><td class="ac">🌙 <strong>Isha Salah</strong></td><td><span class="tag t-salah">العشاء Isha</span></td><td>25 min</td></tr>
+        <tr><td class="tc">8:30 – 10:00 PM</td><td class="ac">🏠 <strong>Home Science</strong> — Board CQ practice, সব অধ্যায়</td><td><span class="tag t-easy">Easy</span></td><td>1.5 hrs</td></tr>
+        <tr><td class="tc">10:00 – 11:00 PM</td><td class="ac">📖 <strong>Bangla</strong> — ব্যাকরণ অনুশীলন, সারাংশ লেখা</td><td><span class="tag t-med">Medium</span></td><td>1 hr</td></tr>
+        <tr><td class="tc">11:00 – 11:30 PM</td><td class="ac">💻 <strong>ICT</strong> — Chapter summary notes</td><td><span class="tag t-easy">Easy</span></td><td>30 min</td></tr>
+        <tr><td class="tc">11:30 PM – 12:00 AM</td><td class="ac">📝 Revision · Azkar</td><td><span class="tag t-rev">Revision</span></td><td>30 min</td></tr>
+        <tr><td class="tc">12:00 AM</td><td class="ac">😴 ঘুম</td><td><span class="tag t-sleep">ঘুম</span></td><td>~6 hrs</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <!-- ══════════ THURSDAY (1 private @ 10 AM) ══════════ -->
+  <div id="thu" class="day-panel">
+    <div class="table-wrap"><table class="rt">
+      <thead><tr><th>সময়</th><th>Activity</th><th>ধরন</th><th>সময়কাল</th></tr></thead>
+      <tbody>
+        <tr><td class="tc">6:00 – 6:15 AM</td><td class="ac">☀️ Freshen up · Quran / Azkar</td><td><span class="tag t-break">সকাল</span></td><td>15 min</td></tr>
+        <tr><td class="tc">6:15 – 8:15 AM</td><td class="ac">🗺️ <strong>Geography 1st & 2nd</strong> — Full chapter test (timed)</td><td><span class="tag t-med">Mock Test</span></td><td>2 hrs</td></tr>
+        <tr><td class="tc">8:15 – 8:45 AM</td><td class="ac">🍳 নাস্তা</td><td><span class="tag t-break">Break</span></td><td>30 min</td></tr>
+        <tr><td class="tc">8:45 – 9:45 AM</td><td class="ac">🏠 <strong>Home Science</strong> — দুর্বল topics চিহ্নিত করে পড়া</td><td><span class="tag t-easy">Easy</span></td><td>1 hr</td></tr>
+        <tr class="pvr"><td class="tc">10:00 – 11:00 AM</td><td class="ac">🏫 <strong>Private</strong> — 10 AM tuition</td><td><span class="tag t-priv">Private ①</span></td><td>1 hr</td></tr>
+        <tr><td class="tc">11:00 AM – 1:00 PM</td><td class="ac">📊 <strong>Economics</strong> — সংখ্যাতত্ত্ব, জাতীয় আয়, বাজার</td><td><span class="tag t-hard">গুরুত্বপূর্ণ</span></td><td>1 hr</td></tr>
+        <tr><td class="tc">1:00 – 1:50 PM</td><td class="ac">🍽️ দুপুরের খাবার · বিশ্রাম</td><td><span class="tag t-break">Break</span></td><td>1 hr</td></tr>
+        <tr class="pr"><td class="tc">1:30 PM</td><td class="ac">🕌 <strong>Dhuhr Salah</strong></td><td><span class="tag t-salah">الظهر Dhuhr</span></td><td>20 min</td></tr>
+        <tr><td class="tc">1:50 – 3:50 PM</td><td class="ac">📜 <strong>Islamic History</strong> — সব তারিখ ও ঘটনার shortlist বানাও</td><td><span class="tag t-med">Medium</span></td><td>2 hrs</td></tr>
+        <tr><td class="tc">3:50 – 4:00 PM</td><td class="ac">বিশ্রাম</td><td><span class="tag t-break">Break</span></td><td>10 min</td></tr>
+        <tr class="pr"><td class="tc">~4:45 PM</td><td class="ac">🕌 <strong>Asr Salah</strong></td><td><span class="tag t-salah">العصر Asr</span></td><td>25 min</td></tr>
+        <tr><td class="tc">4:00 – 5:00 PM</td><td class="ac">📖 <strong>Bangla 1st & 2nd</strong> — কবিতা, গল্প বিশ্লেষণ, ব্যাকরণ MCQ</td><td><span class="tag t-med">Medium</span></td><td>1 hr</td></tr>
+        <tr><td class="tc">5:00 – 6:40 PM</td><td class="ac">বাইরে হাঁটাহাঁটি করা</td><td><span class="tag t-med">Break</span></td><td>1.5 hrs</td></tr>
+        <tr class="pr"><td class="tc">~6:45 PM</td><td class="ac">🌅 <strong>Maghrib Salah</strong> </td><td><span class="tag t-salah">المغرب Maghrib</span></td><td>35 min</td></tr>
+        <tr><td class="tc">7:00 – 8:00 PM</td><td class="ac">🌍 <strong>English</strong> — Letter, CV, report writing</td><td><span class="tag t-easy">Easy</span></td><td>1 hr</td></tr>
+        <tr class="pr"><td class="tc">~8:05 PM</td><td class="ac">🌙 <strong>Isha Salah</strong>· রাতের খাবার</td><td><span class="tag t-salah">العشاء Isha</span></td><td>25 min</td></tr>
+        <tr><td class="tc">8:30 – 10:30 PM</td><td class="ac">📊 <strong>Economics</strong> — সম্পূর্ণ weekly revision, graph practice</td><td><span class="tag t-hard">গুরুত্বপূর্ণ</span></td><td>2 hrs</td></tr>
+        <tr><td class="tc">10:30 – 11:30 PM</td><td class="ac">💻 <strong>ICT</strong> — Practical questions, MCQ full set</td><td><span class="tag t-easy">Easy</span></td><td>1 hr</td></tr>
+        <tr><td class="tc">11:30 PM – 12:00 AM</td><td class="ac">📝 সাপ্তাহিক দুর্বলতা চিহ্নিত করো · Azkar</td><td><span class="tag t-rev">Revision</span></td><td>30 min</td></tr>
+        <tr><td class="tc">12:00 AM</td><td class="ac">😴 ঘুম</td><td><span class="tag t-sleep">ঘুম</span></td><td>~6 hrs</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <!-- ══════════ FRIDAY ══════════ -->
+  <div id="fri" class="day-panel">
+    <div class="table-wrap"><table class="rt">
+      <thead><tr><th>সময়</th><th>Activity</th><th>ধরন</th><th>সময়কাল</th></tr></thead>
+      <tbody>
+        <tr><td class="tc">6:00 – 6:15 AM</td><td class="ac">☀️ Freshen up · সূরা কাহফ তিলাওয়াত (জুমার সুন্নত)</td><td><span class="tag t-break">সকাল</span></td><td>15 min</td></tr>
+        <tr><td class="tc">6:15 – 8:10 AM</td><td class="ac">📊 <strong>Economics</strong> — দুর্বল topics হালকা revision</td><td><span class="tag t-med">হালকা</span></td><td>1 hr 45 min</td></tr>
+        <tr><td class="tc">8:10 – 8:45 AM</td><td class="ac">🍳 নাস্তা </td><td><span class="tag t-break">Break</span></td><td>45 min</td></tr>
+        <tr><td class="tc">8:45 – 9:00 AM</td><td class="ac">📖 সব subject — হালকা MCQ review, নোট দেখা</td><td><span class="tag t-rev">হালকা Revision</span></td><td>1 hr 45 min</td></tr>
+        <tr><td class="tc">9:00 AM – 1:00 PM</td><td class="ac">📊 <strong>Weak Topics/Subject</strong></td><td><span class="tag t-salah">جمعة Jumu'ah</span></td><td>2.5 hrs</td></tr>
+        <tr><td class="tc">1:00 – 2:00 PM</td><td class="ac">🍽️ দুপুরের খাবার · বিশ্রাম · গোসল </td><td><span class="tag t-break">Break</span></td><td>30 min</td></tr>
+        <tr class="pr"><td class="tc">1:30 PM</td><td class="ac">🕌 <strong>Dhuhr</strong> — জুমা আদায় হয়েছে, নফল পড়া যায়</td><td><span class="tag t-salah">الظهر ✓</span></td><td>10 min</td></tr>
+        <tr><td class="tc">1:40 – 3:40 PM</td><td class="ac">📜 <strong>Islamic History + Geography</strong> — MCQ sprint</td><td><span class="tag t-med">Medium</span></td><td>2 hrs</td></tr>
+        <tr><td class="tc">3:40 – 4:40 PM</td><td class="ac">বিশ্রাম · ঘুম</td><td><span class="tag t-break">Break</span></td><td>30 min</td></tr>
+        <tr class="pr"><td class="tc">~4:45 PM</td><td class="ac">🕌 <strong>Asr Salah</strong> · নাস্তা</td><td><span class="tag t-salah">العصر Asr</span></td><td>25 min</td></tr>
+        <tr><td class="tc">5:00 – 6:40 PM</td><td class="ac">🏠 হাঁটাহাঁটি </td><td><span class="tag t-easy">Easy</span></td><td>1.5 hrs</td></tr>
+        <tr class="pr"><td class="tc">~6:45 PM</td><td class="ac">🌅 <strong>Maghrib Salah</strong></td><td><span class="tag t-salah">المغرب Maghrib</span></td><td>40 min</td></tr>
+        <tr><td class="tc">7:25 – 8:00 PM</td><td class="ac">🌍 <strong>English</strong> — হালকা reading, vocabulary</td><td><span class="tag t-easy">Easy</span></td><td>35 min</td></tr>
+        <tr class="pr"><td class="tc">~8:05 PM</td><td class="ac">🌙 <strong>Isha Salah + রাতের খাবার </strong></td><td><span class="tag t-salah">العشاء</span></td><td>25 min</td></tr>
+        <tr><td class="tc">8:30 – 10:30 PM</td><td class="ac">📊 <strong>Economics</strong> — সপ্তাহের সব দুর্বল অধ্যায় fix করো</td><td><span class="tag t-hard">গুরুত্বপূর্ণ</span></td><td>2 hrs</td></tr>
+        <tr><td class="tc">10:30 – 11:30 PM</td><td class="ac">💻 <strong>ICT</strong> — সপ্তাহের সব notes এক জায়গায়</td><td><span class="tag t-easy">Easy</span></td><td>1 hr</td></tr>
+        <tr><td class="tc">11:30 PM – 12:00 AM</td><td class="ac">📝 আগামী সপ্তাহের লক্ষ্য ঠিক করো · Azkar</td><td><span class="tag t-rev">Weekly Plan</span></td><td>30 min</td></tr>
+        <tr><td class="tc">12:00 AM</td><td class="ac">😴 ঘুম</td><td><span class="tag t-sleep">ঘুম</span></td><td>~6 hrs</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <!-- TIPS -->
+  <div class="section-title">💡 গুরুত্বপূর্ণ Tips</div>
+  <div class="tips-grid">
+    <div class="tip-card"><div class="ti">🕌</div><div class="tt">Fajr মিস করো না</div><div class="tx">Routine 6 AM থেকে শুরু হলেও Fajr ~4:05 AM — ঘুম থেকে উঠে নামাজ পড়ে আবার একটু বিশ্রাম নাও, তারপর 6 AM-এ পড়া শুরু।</div></div>
+    <div class="tip-card"><div class="ti">⚠️</div><div class="tt">Asr-এ সতর্ক থাকো</div><div class="tx">Sat/Mon/Wed-এ 4 PM private চলার সময় Asr (~4:45) পড়বে। Private-এর মাঝে ৫ মিনিট break নিয়ে নামাজ পড়ে নাও — কখনো delay করো না।</div></div>
+    <div class="tip-card"><div class="ti">📊</div><div class="tt">Economics সবচেয়ে গুরুত্বপূর্ণ</div><div class="tx">Humanities-এ Economics সবচেয়ে কঠিন। প্রতিদিন কমপক্ষে ১ ঘণ্টা দাও। Graph ও সংজ্ঞা হাতে লিখে অনুশীলন করো।</div></div>
+    <div class="tip-card"><div class="ti">🗺️</div><div class="tt">Geography-তে মানচিত্র</div><div class="tx">শুধু পড়লে হবে না — মানচিত্র হাতে আঁকো। এটা exam-এ সরাসরি marks আসে। প্রতিদিন ১টি করে map practice করো।</div></div>
+    <div class="tip-card"><div class="ti">📜</div><div class="tt">Islamic History = তারিখ</div><div class="tx">সব গুরুত্বপূর্ণ তারিখ ও ঘটনার একটি shortlist বানাও এবং প্রতিদিন রাতে একবার দেখো। Repetition-ই এখানে key।</div></div>
+    <div class="tip-card"><div class="ti">🤲</div><div class="tt">প্রতি session-এ দুআ</div><div class="tx">পড়া শুরুর আগে বলো: <em>رَبِّ زِدۡنِیۡ عِلۡمًا</em> — "হে আমার রব, আমার জ্ঞান বাড়িয়ে দাও।" Allah তোমার পড়ায় বরকত দেবেন।</div></div>
+    <div class="tip-card"><div class="ti">😴</div><div class="tt">ঘুম কম — সতর্ক থাকো</div><div class="tx">12 AM ঘুম, 4 AM Fajr — মাত্র ৪ ঘণ্টা। তাই বিকেলে ২০-৩০ min নামাজের পর একটু rest নাও। দুপুরে lunch-এর পর ঘুমিও না বেশি।</div></div>
+    <div class="tip-card"><div class="ti">📵</div><div class="tt">Phone রাখো দূরে</div><div class="tx">6 AM–12 PM এবং 1:50 PM–4 PM — এই দুটো block-এ phone সম্পূর্ণ বন্ধ বা অন্য ঘরে রাখো। এটাই তোমার peak study time।</div></div>
+  </div>
+
+  <!-- EXAM CARD -->
+  <div class="exam-card">
+    <div class="bismillah">بِسْمِ اللهِ</div>
+    <h3>তোমার HSC পরীক্ষা শুরু হবে</h3>
+    <div class="exam-date">৭ জুন ২০২৬</div>
+    <div class="days-tag">⏳ প্রতিটি দিন গুরুত্বপূর্ণ — consistent থাকো!</div>
+    <div class="dua">رَبِّ اشْرَحْ لِي صَدْرِي وَيَسِّرْ لِي أَمْرِي<br/>
+    <span>"হে আমার রব, আমার বুক প্রশস্ত করে দাও এবং আমার কাজ সহজ করে দাও।" — সূরা ত্বহা ২০:২৫-২৬</span></div>
+  </div>
+
+</div>
+
+<script>
+function showDay(day, btn) {
+  document.querySelectorAll('.day-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(day).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>
